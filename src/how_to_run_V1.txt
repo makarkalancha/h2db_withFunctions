@@ -1,0 +1,10 @@
+
+C:\svn\qa\DatabaseScripts>java -jar "C:\svn\SRC\h2db_withTriggers\out\artifacts\h2db_withTriggers_jar\h2db_withTriggers.jar"
+Picked up JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF8
+TCP server running at tcp://10.30.163.78:9092 (only local connections)
+PG server running at pg://10.30.163.78:5435 (only local connections)
+Web Console server running at http://10.30.163.78:8082 (only local connections)
+
+in intellij:
+-project structure -> modules: add jars or directories -> h2.jar
+-project structure -> artifacts -> add 'jar' from module with dependencies -> main class 'org.h2.tools.Server' and then check 'build on make' (so to update jar Build->make)
