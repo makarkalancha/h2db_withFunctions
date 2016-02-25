@@ -1,10 +1,12 @@
 package com.everything.JDBC.h2;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  * Created by mcalancea on 2016-02-16.
@@ -54,8 +56,31 @@ public class Functions{
         }
     }
 
-    Long insertSelectDate(Connection conn, Date date) {
-//        return new BigInteger(String.valueOf(value)).isProbablePrime(100);
-        return date.getTime();
+    //h2 accepts java.UTIL.Date, not only java.SQL.Date
+    public static Long insertSelectDate(Connection connection, Date date) throws SQLException {
+        Long result = null;
+
+        StringBuilder insertQuery = new StringBuilder();
+        insertQuery.append("INSERT INTO DATEUNIT ");
+        insertQuery.append("VALUES(UNITTIMESTAMP,UNITYEAR,UNITMONTHOFYEAR,UNITMONTH,UNITWEEKOFYEAR,UNITWEEK,UNITDATE,UNITDAYOFWEEK) ");
+        insertQuery.append("(?,?,?,?,?,?,?,?); ");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery.toString(),Statement.RETURN_GENERATED_KEYS)){
+
+            UNITTIMESTAMP
+                    UNITYEAR
+            UNITMONTHOFYEAR
+                    UNITMONTH
+            UNITWEEKOFYEAR
+                    UNITWEEK
+            UNITDATE
+                    UNITDAYOFWEEK
+
+
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            rs.next();
+            result = rs.getLong(1);
+        }
+        return result;
     }
 }
